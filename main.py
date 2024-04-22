@@ -7,6 +7,13 @@ import os
 import binascii
 import uos
 
+# Read the current counter value from the file
+with open('/counter.txt', 'r') as f:
+    counter = int(f.read())
+
+# Increment the counter
+counter += 1
+
 # Get the unique ID
 unique_id = machine.unique_id()
 
@@ -20,25 +27,20 @@ print("\033[32mmachine.unique_id:\033[0m\t",machine.unique_id(),"\033[32m|\033[0
 print("\033[32mmachine.freq:\033[0m\t\t",machine.freq()/1000000,"MHz")
 print("\033[32mesp32.raw_temperature:\033[0m\t",celsius,"C")
 
+# List the files in the root directory
 lsroot = os.listdir('/')
-print("\033[32mos.listdir('/'):\033[0m\t",len(lsroot),"items")
-for item in lsroot:
-    if (os.stat(item)[0] == 16384):
-        print(" 📁","/\033[0;97m" + item + "\033[0m/")
-    else:
-        print(" 📄","/" + item,str(os.stat(item)[6]) + "b")
+print("\033[32mos.listdir('/'):\033[0m\t",len(lsroot),"items\t\033[32m# lsroot\033[0m")
+if (counter < 2):
+    for item in lsroot:
+        if (os.stat(item)[0] == 16384):
+            print(" 📁","/\033[0;97m" + item + "\033[0m/")
+        else:
+            print(" 📄","/" + item,str(os.stat(item)[6]) + "b")
 
-print('\n\033[1;97m🖖🤖🐍\033[0m\n')
-
-# Read the current counter value from the file
-with open('/counter.txt', 'r') as f:
-    counter = int(f.read())
-
-# Increment the counter
-counter += 1
+    print('\n\033[1;97m🖖🤖🐍\033[0m\n')
 
 # Write the updated counter value back to the file
 with open('/counter.txt', 'w') as f:
     f.write(str(counter))
 
-print("\033[32mInit counter:\033[0m", counter)
+print("\033[32mInit counter:\t\033[0m", counter, '\t\033[32m# exec(open(\'/main.py\').read())\033[0m\n')

@@ -34,4 +34,4 @@ else:
     with open('/counter.txt', 'w') as f:
         f.write('0')
 
-print('\n\033[0;32mInit counter reset:\033[0m', '0\n')
+print('\n\033[0;32mInit counter reset:\t\033[0m', '0\n')
