@@ -20,9 +20,15 @@ print("machine.freq:",machine.freq()/1000000,"MHz")
 print("esp32.raw_temperature:",celsius,"C")
 
 lsroot = os.listdir('/')
-print("root folder:",lsroot)
+print("os.listdir('/'):")
+for item in lsroot:
+    if (os.stat(item)[0] == 16384):
+        print("\t","/" + item + "/")
+    else:
+        print("\t","/" + item,str(os.stat(item)[6])+"b")
 
 print('\nHello world!')
+
 
 
 
