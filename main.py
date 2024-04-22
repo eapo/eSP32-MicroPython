@@ -5,6 +5,7 @@ import machine
 import esp32 # type: ignore
 import os
 import binascii
+import uos
 
 # Get the unique ID
 unique_id = machine.unique_id()
@@ -28,3 +29,16 @@ for item in lsroot:
         print(" 📄","/" + item,str(os.stat(item)[6]) + "b")
 
 print('\n\033[1;97m🖖🤖🐍\033[0m\n')
+
+# Read the current counter value from the file
+with open('/counter.txt', 'r') as f:
+    counter = int(f.read())
+
+# Increment the counter
+counter += 1
+
+# Write the updated counter value back to the file
+with open('/counter.txt', 'w') as f:
+    f.write(str(counter))
+
+print("\033[32mInit counter:\033[0m", counter)
