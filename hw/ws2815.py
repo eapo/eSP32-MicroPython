@@ -5,66 +5,50 @@ import time
 import machine
 import neopixel
 
-np = neopixel.NeoPixel(machine.Pin(4), 150)
+n = 150 # number of LEDs on ws2815
+p = 4   # esp32 pin for ws2815
 
-def demo(np):
-    """
-    Executes a series of animations on a NeoPixel strip.
+np = neopixel.NeoPixel(machine.Pin(p), n)
 
-    Args:
-        np (neopixel.NeoPixel): The NeoPixel strip to animate.
-
-    Returns:
-        None
-
-    This function performs three different animations on the NeoPixel strip:
-
-    1. Cycle: The strip lights up one LED at a time in a cyclic order.
-    2. Bounce: The strip lights up one LED at a time and moves it back and forth.
-    3. Fade in/out: The strip lights up one LED at a time and fades in and out.
-
-    After the animations are complete, the strip is cleared.
-
-    Example usage:
-        np = neopixel.NeoPixel(machine.Pin(4), 150)
-        demo(np)
-    """
-    n = np.n
-
-    # cycle
-    for i in range(4 * n):
-        for j in range(n):
-            np[j] = (0, 0, 0)
-        np[i % n] = (255, 255, 255)
-        np.write()
-        time.sleep_ms(25)
-
-    # bounce
-    for i in range(4 * n):
-        for j in range(n):
-            np[j] = (0, 0, 128)
-        if (i // n) % 2 == 0:
-            np[i % n] = (0, 0, 0)
-        else:
-            np[n - 1 - (i % n)] = (0, 0, 0)
-        np.write()
-        time.sleep_ms(60)
-
-    # fade in/out
-    for i in range(0, 4 * 256, 8):
-        for j in range(n):
-            if (i // 256) % 2 == 0:
-                val = i & 0xff
-            else:
-                val = 255 - (i & 0xff)
-            np[j] = (val, 0, 0)
-        np.write()
-
-    # clear
-    for i in range(n):
-        np[i] = (0, 0, 0)
+def clear():
+  for i in range(n):
+    np[i] = (0, 0, 0)
     np.write()
 
-demo(np)
+def set_color(r, g, b):
+  for i in range(n):
+    np[i] = (r, g, b)
+  np.write()
+
+print('\n\033[1;32m' + 'RGB order testing' + '\033[0m\n\033[5m🚥🚥🚥\033[0m')
+for i in range(n):
+    np[i-1] = (i, 0, 0)
+    np.write()
+    time.sleep(0.01)
+for i in range(n):
+    np[i-1] = (0, i, 0)
+    np.write()
+    time.sleep(0.01)
+for i in range(n):
+    np[i-1] = (0, 0, i)
+    np.write()
+    time.sleep(0.01)
+for i in range(n):
+    np[i-1] = (0, 0, 0)
+    np.write()
+    time.sleep(0.01)
+    
+for i in range(3):
+    clear()
+    time.sleep(0.01)
+    np[0] = (10, 10, 10)
+    np[1] = (10, 0, 0)
+    np[2] = (0, 10, 0)
+    np[3] = (0, 0, 10)
+    np[n-1] = (255, 255, 255)
+    np[n-2] = (255, 255, 255)
+    np[n-3] = (255, 255, 255)
+    np.write()
+    time.sleep(0.01)
 
 print('\n🚥🚥🚥✅\n')

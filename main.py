@@ -44,3 +44,6 @@ with open('/counter.txt', 'w') as f:
     f.write(str(counter))
 
 print("\033[32mInit counter:\t\033[0m", counter, '\t\033[32m# exec(open(\'/main.py\').read())\033[0m\n')
+
+# init 1st univere
+exec(open('/1st.py').read())
