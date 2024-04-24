@@ -164,3 +164,5 @@ config.py
 
 # .vscode
 .vscode
+
+webrepl_cfg.py
